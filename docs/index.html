@@ -8,7 +8,7 @@
 <meta name="author" content="Boni García">
 <title>WebDriverManager</title>
 <style>
-#toc@import url(http://fonts.googleapis.com/css?family=Titillium+Web:400,700);
+@import url(http://fonts.googleapis.com/css?family=Titillium+Web:400,700);
 @import url(http://fonts.googleapis.com/css?family=Noticia+Text:400,400italic);
 @import url(http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.0/css/font-awesome.css);
 /* Derived from the Riak documentation theme developed by Basho Technologies, Inc. | CC BY 3.0 License | http://docs.basho.org */
@@ -328,8 +328,8 @@ p a > code:hover { color: #444444; }
 
 #toctitle { color: #3c3d3f; }
 
-@media only screen and (min-width: 1280px) { body.toc2 { padding-left: 18em; }
-  #toc.toc2 { position: fixed; width: 18em; left: 0; top: 0; border-right: 1px solid #cccccc; border-bottom: 0; z-index: 1000; padding: 1em; height: 100%; overflow: auto; }
+@media only screen and (min-width: 1280px) { body.toc2 { padding-left: 19em; }
+  #toc.toc2 { position: fixed; width: 19em; left: 0; top: 0; border-right: 1px solid #cccccc; border-bottom: 0; z-index: 1000; padding: 1em; height: 100%; overflow: auto; }
   #toc.toc2 #toctitle { margin-top: 0; }
   #toc.toc2 > ul { font-size: 1.1em; }
   #toc.toc2 ul ul { margin-left: 0; padding-left: 1.25em; }
@@ -352,7 +352,7 @@ p a > code:hover { color: #444444; }
 .sect1 + .sect1 { border-top: 1px dashed #cccccc; }
 
 #content h1 > a.anchor, h2 > a.anchor, h3 > a.anchor, #toctitle > a.anchor, .sidebarblock > .content > .title > a.anchor, h4 > a.anchor, h5 > a.anchor, h6 > a.anchor { position: absolute; width: 1em; margin-left: -1em; display: block; text-decoration: none; visibility: hidden; text-align: center; font-weight: normal; }
-#content h1 > a.anchor:before, h2 > a.anchor:before, h3 > a.anchor:before, #toctitle > a.anchor:before, .sidebarblock > .content > .title > a.anchor:before, h4 > a.anchor:before, h5 > a.anchor:before, h6 > a.anchor:before { content: '\00A7'; font-size: .85em; vertical-align: text-top; display: block; margin-top: 0.05em; }
+#content h1 > a.anchor:before, h2 > a.anchor:before, h3 > a.anchor:before, #toctitle > a.anchor:before, .sidebarblock > .content > .title > a.anchor:before, h4 > a.anchor:before, h5 > a.anchor:before, h6 > a.anchor:before { content: '\00A7'; font-size: .85em; display: block; margin-top: 0.05em; }
 #content h1:hover > a.anchor, #content h1 > a.anchor:hover, h2:hover > a.anchor, h2 > a.anchor:hover, h3:hover > a.anchor, #toctitle:hover > a.anchor, .sidebarblock > .content > .title:hover > a.anchor, h3 > a.anchor:hover, #toctitle > a.anchor:hover, .sidebarblock > .content > .title > a.anchor:hover, h4:hover > a.anchor, h4 > a.anchor:hover, h5:hover > a.anchor, h5 > a.anchor:hover, h6:hover > a.anchor, h6 > a.anchor:hover { visibility: visible; }
 #content h1 > a.link, h2 > a.link, h3 > a.link, #toctitle > a.link, .sidebarblock > .content > .title > a.link, h4 > a.link, h5 > a.link, h6 > a.link { color: #616366; text-decoration: none; }
 #content h1 > a.link:hover, h2 > a.link:hover, h3 > a.link:hover, #toctitle > a.link:hover, .sidebarblock > .content > .title > a.link:hover, h4 > a.link:hover, h5 > a.link:hover, h6 > a.link:hover { color: #555659; }
@@ -671,7 +671,7 @@ table.tableblock.grid-all { -webkit-border-radius: 0; border-radius: 0; -webkit-
     font-family: 'Publica Play Regular';
     font-style: normal;
     font-weight: normal;
-    src: local('Publica Play Regular'), url('FaceType-PublicaPlay-Regular.woff') format('woff');
+    src: url('./css/FaceType-PublicaPlay-Regular.woff') format('woff');
 }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -696,55 +696,58 @@ table.tableblock.grid-all { -webkit-border-radius: 0; border-radius: 0; -webkit-
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#motivation">Motivation</a></li>
-<li><a href="#setup">Setup</a></li>
-<li><a href="#features">Features</a>
+<li><a href="#motivation">1. Motivation</a></li>
+<li><a href="#setup">2. Setup</a></li>
+<li><a href="#features">3. Features</a>
 <ul class="sectlevel2">
-<li><a href="#driver-management">Driver Management</a></li>
-<li><a href="#browser-finder">Browser Finder</a></li>
-<li><a href="#webdriver-builder">WebDriver Builder</a></li>
-<li><a href="#browsers-in-docker">Browsers in Docker</a></li>
+<li><a href="#driver-management">3.1. Driver Management</a>
+<ul class="sectlevel3">
+<li><a href="#resolution-algorithm">3.1.1. Resolution Algorithm</a></li>
 </ul>
 </li>
-<li><a href="#other-usages">Other Usages</a>
-<ul class="sectlevel2">
-<li><a href="#wdm-cli">WDM CLI</a></li>
-<li><a href="#wdm-server">WDM Server</a></li>
-<li><a href="#wdm-in-docker">WDM in Docker</a></li>
-<li><a href="#wdm-agent">WDM Agent</a></li>
+<li><a href="#browser-finder">3.2. Browser Finder</a></li>
+<li><a href="#webdriver-builder">3.3. WebDriver Builder</a></li>
+<li><a href="#browsers-in-docker">3.4. Browsers in Docker</a>
+<ul class="sectlevel3">
+<li><a href="#recordings">3.4.1. Recordings</a></li>
+<li><a href="#remote-desktop">3.4.2. Remote Desktop</a></li>
 </ul>
 </li>
-<li><a href="#examples">Examples</a></li>
-<li><a href="#configuration">Configuration</a></li>
-<li><a href="#known-issues">Known issues</a></li>
-<li><a href="#support">Support</a></li>
-<li><a href="#contributing">Contributing</a></li>
-<li><a href="#further-documentation">Further documentation</a></li>
-<li><a href="#about">About</a></li>
+</ul>
+</li>
+<li><a href="#other-usages">4. Other Usages</a>
+<ul class="sectlevel2">
+<li><a href="#wdm-cli">4.1. WDM CLI</a></li>
+<li><a href="#wdm-server">4.2. WDM Server</a></li>
+<li><a href="#wdm-in-docker">4.3. WDM in Docker</a></li>
+<li><a href="#wdm-agent">4.4. WDM Agent</a></li>
+</ul>
+</li>
+<li><a href="#examples">5. Examples</a></li>
+<li><a href="#configuration">6. Configuration</a></li>
+<li><a href="#known-issues">7. Known issues</a></li>
+<li><a href="#support">8. Support</a></li>
+<li><a href="#contributing">9. Contributing</a></li>
+<li><a href="#further-documentation">10. Further documentation</a></li>
+<li><a href="#about">11. About</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="motivation"><a class="anchor" href="#motivation"></a>Motivation</h2>
+<h2 id="motivation"><a class="anchor" href="#motivation"></a>1. Motivation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://seleniumhq.github.io/docs/site/en/webdriver/">Selenium WebDriver</a> allows to control different types of browsers (such as Chrome, Firefox, Edge, and so on) programmatically using different programming languages. This is very useful to implement automated tests for web applications. Nevertheless, in order to use WebDriver, we need to pay a prize. For security reasons, the automated manipulation of a browser can only be done using native features of the browser. In practical terms, it means that a binary file must be placed in between the test using the WebDriver API and the actual browser. One the one hand, the communication between the WebDriver object and that binary is done using the (<a href="https://www.w3.org/TR/webdriver/)">W3C WebDriver specification</a>, formerly called <em>JSON Wire Protocol</em>. It consists basically on a REST service using JSON for requests and responses. On the other hand, the communication between the binary and the browser is done using native capabilities of the browser. Therefore, the general schema of Selenium WebDriver can be illustrated as follows:</p>
 </div>
 <div class="imageblock thumb">
 <div class="content">
-<img src="./img/webdriver-general-schema.png" alt="webdriver general schema">
+<img src="./img/selenium-webdriver-archquitecture.png" alt="selenium webdriver archquitecture">
 </div>
-<div class="title">Figure 1. WebDriver general scenario</div>
+<div class="title">Figure 1. Selenium WebDriver Architecture</div>
 </div>
 <div class="paragraph">
-<p>From a tester point of view, the need of this binary component is a pain in the neck, since it should be downloaded manually for the proper platform running the test (i.e. Windows, Linux, Mac). Moreover, the binary version should be constantly updated. The majority of browsers evolve quite fast, and the corresponding binary file required by WebDriver needs to be also updated. The following picture shows a fine-grained diagram of the different flavor of WebDriver binaries and browsers:</p>
-</div>
-<div class="imageblock thumb">
-<div class="content">
-<img src="./img/webdriver-particular-schemas.png" alt="webdriver particular schemas">
-</div>
-<div class="title">Figure 2. WebDriver scenario for Chrome, Firefox, Opera, PhantomJS, Edge, and Internet Explorer</div>
+<p>From a tester point of view, the need of this binary component is a pain in the neck, since it should be downloaded manually for the proper platform running the test (i.e. Windows, Linux, Mac). Moreover, the binary version should be constantly updated. The majority of browsers evolve quite fast, and the corresponding binary file required by WebDriver needs to be also updated.</p>
 </div>
 <div class="paragraph">
 <p>Concerning Java, in order to locate these drivers, the absolute path of the binary controlling the browser should be exported in a given environment variable before creating a WebDriver instance, as follows:</p>
@@ -752,11 +755,10 @@ table.tableblock.grid-all { -webkit-border-radius: 0; border-radius: 0; -webkit-
 <div class="listingblock">
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
+System.setProperty("webdriver.gecko.driver", "/path/to/geckodriver");
+System.setProperty("webdriver.edge.driver", "/path/to/msedgedriver");
 System.setProperty("webdriver.opera.driver", "/path/to/operadriver");
-System.setProperty("webdriver.ie.driver", "C:/path/to/IEDriverServer.exe");
-System.setProperty("webdriver.edge.driver", "C:/path/to/MicrosoftWebDriver.exe");
-System.setProperty("phantomjs.binary.path", "/path/to/phantomjs");
-System.setProperty("webdriver.gecko.driver", "/path/to/geckodriver");</code></pre>
+System.setProperty("webdriver.ie.driver", "C:/path/to/IEDriverServer.exe");</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -766,16 +768,15 @@ System.setProperty("webdriver.gecko.driver", "/path/to/geckodriver");</code></pr
 <div class="content">
 <pre class="highlight"><code class="language-java" data-lang="java">WebDriverManager.chromedriver().setup();
 WebDriverManager.firefoxdriver().setup();
-WebDriverManager.operadriver().setup();
-WebDriverManager.phantomjs().setup();
 WebDriverManager.edgedriver().setup();
+WebDriverManager.operadriver().setup();
 WebDriverManager.iedriver().setup();;</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="setup"><a class="anchor" href="#setup"></a>Setup</h2>
+<h2 id="setup"><a class="anchor" href="#setup"></a>2. Setup</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Using WebDriverManager is very easy. First, you need to import the dependency in your project (typically as <em>test</em> dependency). In Maven, it is done as follows:</p>
@@ -883,28 +884,75 @@ As of JUnit 5.1, extensions can be registered programmatically via <code>@Regist
 </div>
 </div>
 <div class="sect1">
-<h2 id="features"><a class="anchor" href="#features"></a>Features</h2>
+<h2 id="features"><a class="anchor" href="#features"></a>3. Features</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="driver-management"><a class="anchor" href="#driver-management"></a>Driver Management</h3>
+<h3 id="driver-management"><a class="anchor" href="#driver-management"></a>3.1. Driver Management</h3>
+<div class="paragraph">
+<p>Under construction.</p>
+</div>
+<div class="sect3">
+<h4 id="resolution-algorithm"><a class="anchor" href="#resolution-algorithm"></a>3.1.1. Resolution Algorithm</h4>
+<div class="paragraph">
+<p>Under construction.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="browser-finder"><a class="anchor" href="#browser-finder"></a>3.2. Browser Finder</h3>
 <div class="paragraph">
 <p>Under construction.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="browser-finder"><a class="anchor" href="#browser-finder"></a>Browser Finder</h3>
+<h3 id="webdriver-builder"><a class="anchor" href="#webdriver-builder"></a>3.3. WebDriver Builder</h3>
 <div class="paragraph">
 <p>Under construction.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="webdriver-builder"><a class="anchor" href="#webdriver-builder"></a>WebDriver Builder</h3>
+<h3 id="browsers-in-docker"><a class="anchor" href="#browsers-in-docker"></a>3.4. Browsers in Docker</h3>
+<div class="paragraph">
+<p>Under construction.</p>
+</div>
+<div class="sect3">
+<h4 id="recordings"><a class="anchor" href="#recordings"></a>3.4.1. Recordings</h4>
+<div class="paragraph">
+<p>Under construction.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="remote-desktop"><a class="anchor" href="#remote-desktop"></a>3.4.2. Remote Desktop</h4>
+<div class="paragraph">
+<p>Under construction.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="other-usages"><a class="anchor" href="#other-usages"></a>4. Other Usages</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="wdm-cli"><a class="anchor" href="#wdm-cli"></a>4.1. WDM CLI</h3>
 <div class="paragraph">
 <p>Under construction.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="browsers-in-docker"><a class="anchor" href="#browsers-in-docker"></a>Browsers in Docker</h3>
+<h3 id="wdm-server"><a class="anchor" href="#wdm-server"></a>4.2. WDM Server</h3>
+<div class="paragraph">
+<p>Under construction.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="wdm-in-docker"><a class="anchor" href="#wdm-in-docker"></a>4.3. WDM in Docker</h3>
+<div class="paragraph">
+<p>Under construction.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="wdm-agent"><a class="anchor" href="#wdm-agent"></a>4.4. WDM Agent</h3>
 <div class="paragraph">
 <p>Under construction.</p>
 </div>
@@ -912,36 +960,7 @@ As of JUnit 5.1, extensions can be registered programmatically via <code>@Regist
 </div>
 </div>
 <div class="sect1">
-<h2 id="other-usages"><a class="anchor" href="#other-usages"></a>Other Usages</h2>
-<div class="sectionbody">
-<div class="sect2">
-<h3 id="wdm-cli"><a class="anchor" href="#wdm-cli"></a>WDM CLI</h3>
-<div class="paragraph">
-<p>Under construction.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="wdm-server"><a class="anchor" href="#wdm-server"></a>WDM Server</h3>
-<div class="paragraph">
-<p>Under construction.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="wdm-in-docker"><a class="anchor" href="#wdm-in-docker"></a>WDM in Docker</h3>
-<div class="paragraph">
-<p>Under construction.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="wdm-agent"><a class="anchor" href="#wdm-agent"></a>WDM Agent</h3>
-<div class="paragraph">
-<p>Under construction.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+<h2 id="examples"><a class="anchor" href="#examples"></a>5. Examples</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Under construction.</p>
@@ -949,7 +968,7 @@ As of JUnit 5.1, extensions can be registered programmatically via <code>@Regist
 </div>
 </div>
 <div class="sect1">
-<h2 id="configuration"><a class="anchor" href="#configuration"></a>Configuration</h2>
+<h2 id="configuration"><a class="anchor" href="#configuration"></a>6. Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Under construction.</p>
@@ -957,42 +976,30 @@ As of JUnit 5.1, extensions can be registered programmatically via <code>@Regist
 </div>
 </div>
 <div class="sect1">
-<h2 id="known-issues"><a class="anchor" href="#known-issues"></a>Known issues</h2>
+<h2 id="known-issues"><a class="anchor" href="#known-issues"></a>7. Known issues</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Under construction.</p>
+</div>
+<h4 id="http-response-code-403" class="discrete">HTTP response code 403</h4>
+<div class="paragraph">
+<p>Under construction.</p>
+</div>
+<h4 id="testing-localhost" class="discrete">Testing localhost</h4>
+<div class="paragraph">
+<p>Under construction.</p>
+</div>
+<h4 id="docker-and-chromedriver-92" class="discrete">Docker and chromedriver 92+</h4>
 <div class="paragraph">
 <p>Under construction.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="support"><a class="anchor" href="#support"></a>Support</h2>
+<h2 id="support"><a class="anchor" href="#support"></a>8. Support</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Under construction.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="contributing"><a class="anchor" href="#contributing"></a>Contributing</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Under construction.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="further-documentation"><a class="anchor" href="#further-documentation"></a>Further documentation</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Under construction.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="about"><a class="anchor" href="#about"></a>About</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><strong>WebDriverManager</strong> (Copyright © 2017-2021) is a project created by <a href="http://bonigarcia.github.io/">Boni Garcia</a> (<a href="https://twitter.com/boni_gg">@boni_gg</a>) licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>. This documentation is released under the terms of <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a> (also available in <a href="webdrivermanager.pdf">PDF</a>). There are several ways to get in touch with WebDriverManager:</p>
+<p>There are several ways to get in touch with WebDriverManager:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1009,11 +1016,35 @@ As of JUnit 5.1, extensions can be registered programmatically via <code>@Regist
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="contributing"><a class="anchor" href="#contributing"></a>9. Contributing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Under construction.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="further-documentation"><a class="anchor" href="#further-documentation"></a>10. Further documentation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Under construction.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="about"><a class="anchor" href="#about"></a>11. About</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>WebDriverManager</strong> (Copyright © 2017-2021) is an open-source project created and maintained by <a href="http://bonigarcia.github.io/">Boni Garcia</a> (<a href="https://twitter.com/boni_gg">@boni_gg</a>) licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache 2.0 License</a>. This documentation (also available in <a href="webdrivermanager.pdf">PDF</a>) is released under the terms of <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+</div>
+</div>
+</div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 5.0.0-SNAPSHOT<br>
-Last updated 2021-07-28 01:57:37 +0200
+Last updated 2021-07-28 14:28:15 +0200
 </div>
 </div>
 </body>

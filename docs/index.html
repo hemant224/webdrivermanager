@@ -328,10 +328,9 @@ p a > code:hover { color: #444444; }
 
 #toctitle { color: #3c3d3f; }
 
-@media only screen and (min-width: 1280px) { body.toc2 { padding-left: 19em; }
-  #toc.toc2 { position: fixed; width: 19em; left: 0; top: 0; border-right: 1px solid #cccccc; border-bottom: 0; z-index: 1000; padding: 1em; height: 100%; overflow: auto; }
+@media only screen and (min-width: 1280px) { body.toc2 { padding-left: 18.5em; }
+  #toc.toc2 { position: fixed; width: 18.5em; left: 0; top: 0; border-right: 1px solid #cccccc; border-bottom: 0; z-index: 1000; padding: 1em; height: 100%; overflow: auto; }
   #toc.toc2 #toctitle { margin-top: 0; }
-  #toc.toc2 > ul { font-size: 1.1em; }
   #toc.toc2 ul ul { margin-left: 0; padding-left: 1.25em; }
   #toc.toc2 ul.sectlevel0 ul.sectlevel1 { padding-left: 0; margin-top: 0.5em; margin-bottom: 0.5em; }
   body.toc2.toc-right { padding-left: 0; padding-right: 18em; }
@@ -807,17 +806,17 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </li>
 <li><a href="#other-usages">4. Other Usages</a>
 <ul class="sectlevel2">
-<li><a href="#wdm-cli">4.1. WDM CLI</a></li>
-<li><a href="#wdm-server">4.2. WDM Server</a></li>
-<li><a href="#wdm-agent">4.3. WDM Agent</a></li>
+<li><a href="#webdrivermanager-cli">4.1. WebDriverManager CLI</a></li>
+<li><a href="#webdrivermanager-server">4.2. WebDriverManager Server</a></li>
+<li><a href="#webdrivermanager-agent">4.3. WebDriverManager Agent</a></li>
 <li><a href="#selenium-jupiter">4.4. Selenium-Jupiter</a></li>
 </ul>
 </li>
 <li><a href="#examples">5. Examples</a></li>
 <li><a href="#advanced-configuration">6. Advanced Configuration</a></li>
 <li><a href="#known-issues">7. Known Issues</a></li>
-<li><a href="#support">8. Support</a></li>
-<li><a href="#contributing">9. Contributing</a></li>
+<li><a href="#community">8. Community</a></li>
+<li><a href="#support">9. Support</a></li>
 <li><a href="#further-documentation">10. Further Documentation</a></li>
 <li><a href="#about">11. About</a></li>
 </ul>
@@ -1575,7 +1574,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 <p>In addition to as a regular Java dependency, WebDriverManager can be used in other ambits. This section summarizes these usages.</p>
 </div>
 <div class="sect2">
-<h3 id="wdm-cli"><a class="anchor" href="#wdm-cli"></a>4.1. WDM CLI</h3>
+<h3 id="webdrivermanager-cli"><a class="anchor" href="#webdrivermanager-cli"></a>4.1. WebDriverManager CLI</h3>
 <div class="paragraph">
 <p>WebDriverManager can be used interactively from the Command Line Interface (CLI), i.e., the shell. There are three different ways to use WebDriverManager as a CLI tool:</p>
 </div>
@@ -1720,7 +1719,7 @@ There is an <a href="https://bugs.chromium.org/p/chromedriver/issues/detail?id=3
 </div>
 <h4 id="option-3-server" class="discrete">Option 3: Server</h4>
 <div class="paragraph">
-<p>Finally, WebDriverManager CLI allows starting the WebDriverManager Server, as follows (see <a href="#wdm-server">next section</a> for more details about it):</p>
+<p>Finally, WebDriverManager CLI allows starting the WebDriverManager Server, as follows (see <a href="#webdrivermanager-server">next section</a> for more details about it):</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1760,7 +1759,7 @@ There is an <a href="https://bugs.chromium.org/p/chromedriver/issues/detail?id=3
 </div>
 </div>
 <div class="sect2">
-<h3 id="wdm-server"><a class="anchor" href="#wdm-server"></a>4.2. WDM Server</h3>
+<h3 id="webdrivermanager-server"><a class="anchor" href="#webdrivermanager-server"></a>4.2. WebDriverManager Server</h3>
 <div class="paragraph">
 <p>The WebDriverManager Server is based on HTTP and offers two types of services. First, it can be used to resolve drivers (chromedriver, geckodriver, etc.). The WebDriverManager Server exposes a simple REST-like API to this aim. WebDriverManager Server sends the resolved driver as an HTTP attachment in the response. The endpoints provided by this API are the following (supposing that WebDriverManager is running the localhost in its default port, i.e., 4444):</p>
 </div>
@@ -1823,7 +1822,7 @@ wdmServerTest();</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="wdm-agent"><a class="anchor" href="#wdm-agent"></a>4.3. WDM Agent</h3>
+<h3 id="webdrivermanager-agent"><a class="anchor" href="#webdrivermanager-agent"></a>4.3. WebDriverManager Agent</h3>
 <div class="paragraph">
 <p>WebDriverManager can also be used as <em>Java Agent</em>. In this case, and using the JVM instrumentation API, WebDriverManager intercepts calls to applications running on the JVM and modifies their bytecode. In particular, the WebDriverManager Agent uses this technique to check the objects being created in the JVM. Before Selenium WebDriver objects are instantiated (<code>ChromeDriver</code>, <code>FirefoxDriver</code>, etc.), the required manager is used to resolve its driver (chromedriver, geckodriver, etc.). Thanks to this approach, we can get rid of the WebDriverManager call (e.g. <code>WebDriverManager.chromedriver.setup();</code>) from our test, for example:</p>
 </div>
@@ -2142,7 +2141,7 @@ HTTP proxy. It can be also configured using the environment variable  <code>HTTP
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>avoidExport()</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>wdm.avoidExport=true</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code> (export driver paths as Java properties (e.g. <code>webdriver.chrome.driver</code>)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Avoid step 4 in the <a href="#resolution-algorithm">resolution algorithm</a> (for instance, in the <a href="#wdm-cli">CLI</a> mode)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Avoid step 4 in the <a href="#resolution-algorithm">resolution algorithm</a> (for instance, in the <a href="#webdrivermanager-cli">CLI</a> mode)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>exportParameter(String)</code></p></td>
@@ -2154,7 +2153,7 @@ HTTP proxy. It can be also configured using the environment variable  <code>HTTP
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>avoidOutputTree()</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>wdm.avoidOutputTree=true</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code> (create output tree in the driver cache, e.g., <code>chromedriver/linux64/2.37</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Avoid output tree (for instance, in the <a href="#wdm-cli">CLI</a> mode)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Avoid output tree (for instance, in the <a href="#webdrivermanager-cli">CLI</a> mode)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>avoidFallback()</code></p></td>
@@ -2445,22 +2444,24 @@ HTTP proxy. It can be also configured using the environment variable  <code>HTTP
 </div>
 </div>
 <div class="sect1">
-<h2 id="support"><a class="anchor" href="#support"></a>8. Support</h2>
+<h2 id="community"><a class="anchor" href="#community"></a>8. Community</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>There are two ways to try to get community support related WebDriverManager. First, questions about WebDriverManager can be discussed in <a href="https://stackoverflow.com/questions/tagged/webdrivermanager_java">StackOverflow</a>, using the tag <em>webdrivermanager_java</em>. In addition, comments, suggestions, and bug-reporting should be made using the <a href="https://github.com/bonigarcia/webdrivermanager/issues">GitHub issues</a>.</p>
+<p>There are two ways to try to get community support related to WebDriverManager. First, questions about it can be discussed in <a href="https://stackoverflow.com/questions/tagged/webdrivermanager_java">StackOverflow</a>, using the tag <em>webdrivermanager_java</em>. In addition, comments, suggestions, and bug-reporting should be made using the <a href="https://github.com/bonigarcia/webdrivermanager/issues">GitHub issues</a>. Finally, if you think WebDriverManager can be enhanced, consider contributing to the project through a  <a href="https://github.com/bonigarcia/webdrivermanager/pulls">pull request</a>.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="contributing"><a class="anchor" href="#contributing"></a>9. Contributing</h2>
+<h2 id="support"><a class="anchor" href="#support"></a>9. Support</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>If you think WebDriverManager can be enhanced, consider contributing to the project through a  <a href="https://github.com/bonigarcia/webdrivermanager/pulls">pull request</a>.</p>
+<p><a href="https://opencollective.com/webdrivermanager">WebDriverManager</a> is part of <a href="https://opencollective.com/bonigarcia">OpenCollective</a>, an online funding platform for open and transparent communities. You can support the project by contributing as a backer (i.e., a personal <a href="https://opencollective.com/webdrivermanager/donate">donation</a> or <a href="https://opencollective.com/webdrivermanager/contribute/backer-8132/checkout">recurring contribution</a>) or as a <a href="https://opencollective.com/webdrivermanager/contribute/sponsor-8133/checkout">sponsor</a> (i.e., a recurring contribution by a company).</p>
 </div>
-<div class="paragraph">
-<p>In addition, both <a href="https://opencollective.com/webdrivermanager">WebDriverManager</a> and <a href="https://opencollective.com/selenium-jupiter">Selenium-Jupiter</a> are part of <a href="https://opencollective.com/bonigarcia">OpenCollective</a>, an online funding platform for open and transparent communities. You can contribute with the project as a <a href="https://opencollective.com/webdrivermanager/donate">donation</a> (i.e., an individual custom contribution), as a <a href="https://opencollective.com/webdrivermanager/contribute/backer-8132/checkout">backer</a> (i.e., an individual recurring contribution),  or as <a href="https://opencollective.com/webdrivermanager/contribute/sponsor-8133/checkout">sponsor</a> (i.e., a recurring contribution by a company).</p>
-</div>
+<h3 id="backers" class="discrete">Backers</h3>
+<a href="https://opencollective.com/webdrivermanager#backers" target="_blank"><img src="https://opencollective.com/webdrivermanager/backers.svg?width=890"></a>
+<h3 id="sponsors" class="discrete">Sponsors</h3>
+<a href="https://opencollective.com/webdrivermanager/sponsor/0/website" target="_blank"><img src="https://opencollective.com/webdrivermanager/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/webdrivermanager/sponsor/1/website" target="_blank"><img src="https://opencollective.com/webdrivermanager/sponsor/1/avatar.svg"></a>
 </div>
 </div>
 <div class="sect1">

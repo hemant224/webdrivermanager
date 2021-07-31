@@ -391,7 +391,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 
 .exampleblock > .content > :last-child > :last-child, .exampleblock > .content .olist > ol > li:last-child > :last-child, .exampleblock > .content .ulist > ul > li:last-child > :last-child, .exampleblock > .content .qlist > ol > li:last-child > :last-child, .sidebarblock > .content > :last-child > :last-child, .sidebarblock > .content .olist > ol > li:last-child > :last-child, .sidebarblock > .content .ulist > ul > li:last-child > :last-child, .sidebarblock > .content .qlist > ol > li:last-child > :last-child { margin-bottom: 0; }
 
-.literalblock > .content pre, .listingblock > .content pre { background: url('./img/pre-bg.jpg'); border-width: 0 0 1px 0; border-style: solid; border-color: #f0f0f0; -webkit-border-radius: 4px; border-radius: 4px; padding: 15px; word-wrap: break-word; }
+.literalblock > .content pre, .listingblock > .content pre { border-width: 0 0 1px 0; border-style: solid; border-color: #f0f0f0; -webkit-border-radius: 4px; border-radius: 4px; padding: 15px; word-wrap: break-word; }
 .literalblock > .content pre.nowrap, .listingblock > .content pre.nowrap { overflow-x: auto; white-space: pre; word-wrap: normal; }
 .literalblock > .content pre > code, .listingblock > .content pre > code { display: block; }
 @media only screen { .literalblock > .content pre, .listingblock > .content pre { font-size: 0.64em; } }
@@ -652,10 +652,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 
 .exampleblock > .content { background-color: transparent; border-color: #c9c9c9; }
 
-.sidebarblock { background-image: url('./img/sidebar-bg.jpg'); -webkit-border-radius: 5px; border-radius: 5px; }
-.sidebarblock > .content > .title { color: #f1f1f1; text-shadow: 0px 2px 2px black; font-size: 1.25em; font-weight: bold; }
-.sidebarblock > .content ul, .sidebarblock > .content p { color: #f1f1f1; text-shadow: 0px 1px 1px black; }
-.sidebarblock > .content .title { color: #dfdfdf; }
+.sidebarblock > .content > .title { font-size: 1.25em; font-weight: bold; }
 .sidebarblock > .content code { color: #333; }
 .sidebarblock > .content a { color: #60B5D8; }
 .sidebarblock > .content a:hover { color: #FAA94C; }
@@ -843,7 +840,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <div class="title">Figure 1. Selenium WebDriver Architecture</div>
 </div>
 <div class="paragraph">
-<p>From a practical point of view, we need to carry out a <em>driver management process</em> to use Selenium WebDriver. This process consists on:</p>
+<p>From a practical point of view, we need to make a <em>driver management process</em> to use Selenium WebDriver. This process consists on:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -851,7 +848,7 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <p>Download. Drivers are platform-specific binary files. To download the proper driver, we have to identify the driver type we need (e.g., chromedriver if we want to use Chrome), the operating system (typically, Windows, Linux, or Mac OS), the architecture (typically, 32 or 64 bits), and very important, the driver version. Concerning the version, each driver release is usually compatible with a given browser version(s). For this reason, we need to discover the correct driver version for a specific browser release (typically reading the driver documentation or release notes).</p>
 </li>
 <li>
-<p>Setup. Once we have downloaded the driver to our computer, we need to provide a way to locate this driver from our Selenium WebDriver tests. In Java, this setup can be done in two different ways. First, we can add the driver location to our PATH environmental variable. Second, we can use <em>Java system properties</em> to export the driver path. Each driver path should be identified using a given system property, as follows:</p>
+<p>Setup. Once we have downloaded the driver to our computer, we need to provide a way to locate this driver from our Selenium WebDriver tests. In Java, this setup can be done in two different ways. First, we can add the driver location to our <code>PATH</code> environmental variable. Second, we can use <em>Java system properties</em> to export the driver path. Each driver path should be identified using a given system property, as follows:</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="java"><span class="predefined-type">System</span>.setProperty(<span class="string"><span class="delimiter">&quot;</span><span class="content">webdriver.chrome.driver</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">/path/to/chromedriver</span><span class="delimiter">&quot;</span></span>);
@@ -867,8 +864,13 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 </li>
 </ol>
 </div>
+<div class="sidebarblock">
+<div class="content">
+<div class="title">What is WebDriverManager?</div>
 <div class="paragraph">
-<p><a href="https://github.com/bonigarcia/webdrivermanager">WebDriverManager</a> is an open-source Java library that carries out this <a href="#driver-management">driver management process in a fully automated manner</a>. In addition, as of version 5, WebDriverManager provides other relevant features, such as the ability to <a href="#browser-finder">discover if a browser is installed in the system</a>, <a href="#webdriver-builder">building WebDriver objects</a> (such as <code>ChromeDriver</code>, <code>FirefoxDriver</code>, etc.), and the capability to run <a href="#browsers-in-docker">browsers in Docker containers</a> containers seamlessly.</p>
+<p><a href="https://github.com/bonigarcia/webdrivermanager">WebDriverManager</a> is an open-source Java library that carries out the management (i.e., download, setup, and maintenance) of the drivers required by <a href="https://seleniumhq.github.io/docs/site/en/webdriver/">Selenium WebDriver</a> (e.g., chromedriver, geckodriver, msedgedriver, etc.) in a fully automated manner. In addition, as of version 5, WebDriverManager provides other relevant features, such as the capability to <a href="#browser-finder">discover browsers</a> installed in the local system, <a href="#webdriver-builder">building WebDriver objects</a> (such as <code>ChromeDriver</code>, <code>FirefoxDriver</code>, <code>EdgeDriver</code>, etc.), and running <a href="#browsers-in-docker">browsers in Docker containers</a> seamlessly.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -974,10 +976,22 @@ WebDriverManager.iedriver().setup();</code></pre>
 <div class="paragraph">
 <p>As of version 5, WebDriverManager also provides a manager for Safari (called <code>safaridriver()</code>). The case of the Safari browser is particular since this browser does not require to manage its driver to work with Selenium WebDriver (in other words, the Safari driver is built-in within the browser). Nevertheless, WebDriverManager provides this manager to be used in the WebDriver builder (especially with <a href="#browsers-in-docker">Docker</a>).</p>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Although not mandatory, it is highly recommended to use a logger library to trace your application and tests. In the case of WebDriverManager, you will see the relevant steps of the driver management following its traces. See for example the following <a href="https://www.stubbornjava.com/posts/logging-in-java-with-slf4j-and-logback)">tutorial</a> to use <a href="http://www.slf4j.org/">SLF4J </a> and <a href="http://logback.qos.ch/">Logback</a>. Also, you can see an example of a WebDriverManager test using logging <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/firefox/FirefoxTest.java">here</a>.
+</td>
+</tr>
+</table>
+</div>
 <div class="sect3">
 <h4 id="resolution-algorithm"><a class="anchor" href="#resolution-algorithm"></a>3.1.1. Resolution Algorithm</h4>
 <div class="paragraph">
-<p>WebDriverManager executes a <em>resolution algorithm</em> when calling to <code>setup()</code> in a given manager. You can find all the internal details of this algorithm in the paper <a href="https://link.springer.com/article/10.1007/s10664-021-09975-3">Automated driver management for Selenium WebDriver</a>, published in the Springer Journal of Empirical Software Engineering. The most relevant parts of this algorithm are the following:</p>
+<p>WebDriverManager executes a <em>resolution algorithm</em> when calling to <code>setup()</code> in a given manager. You can find all the internal details of this algorithm in the paper <a href="https://link.springer.com/article/10.1007/s10664-021-09975-3">Automated driver management for Selenium WebDriver</a>, published in the Springer Journal of Empirical Software Engineering in 2021. The most relevant parts of this algorithm are the following:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -997,7 +1011,7 @@ This process is different for each browser. In Chrome and Edge, their respective
 </ol>
 </div>
 <div class="paragraph">
-<p>This process automated the first two stages of the driver management previously introduced, i.e., download and setup. To support the third stage (i.e., maintenance), WebDriverManager implements <em>resolution cache</em>. This cache (called by default <code>resolution.properties</code> and stored in the root of the driver cache) is a file that stores the relationship between the resolved driver and browser versions. This relationship is valid during a given <em>time-to-live</em> (TTL). The default value for this TTL is 1 hour for browsers and 1 day for drivers. In other words, the discovered browser version is valid for 1 hour, and the driver version is correct for 1 day. This mechanism improves the performance dramatically since the second (and following) calls to the resolution algorithm for the same browser are resolved using local resources (i.e., without using the shell nor requesting external servers).</p>
+<p>This process automated the first two stages of the driver management previously introduced, i.e., download and setup. To support the third stage (i.e., maintenance), WebDriverManager implements <em>resolution cache</em>. This cache (called by default <code>resolution.properties</code> and stored in the root of the driver cache) is a file that stores the relationship between the resolved driver and browser versions. This relationship is valid during a given <em>time-to-live</em> (TTL). The default value for this TTL is 1 hour for browsers and 1 day for drivers. In other words, the discovered browser version is valid for 1 hour, and the driver version is considered correct for 1 day. This mechanism improves the performance dramatically since the second (and following) calls to the resolution algorithm for the same browser are resolved using only local resources (i.e., without using the shell nor requesting external services).</p>
 </div>
 </div>
 <div class="sect3">
@@ -1008,7 +1022,7 @@ This process is different for each browser. In Chrome and Edge, their respective
 <div class="ulist">
 <ul>
 <li>
-<p><code>getInstance(Class&lt;? extends WebDriver&gt; webDriverClass)</code>: Where <code>webDriverClass</code> is a class of the Selniun WebDriver standard hierarchy, such as <code>ChromeDriver.class</code>, <code>FirefoxDriver.class</code>, etc.</p>
+<p><code>getInstance(Class&lt;?&gt; webDriverClass)</code>: Where <code>webDriverClass</code> is a class of the Selenium WebDriver standard hierarchy, such as <code>ChromeDriver.class</code>, <code>FirefoxDriver.class</code>, etc.</p>
 </li>
 <li>
 <p><code>getInstance(DriverManagerType driverManagerType)</code>: Where <code>driverManagerType</code> is an <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/main/java/io/github/bonigarcia/wdm/config/DriverManagerType.java">enumeration</a> provided by WebDriverManager to identify the available managers.</p>
@@ -1097,7 +1111,7 @@ This process is different for each browser. In Chrome and Edge, their respective
 <i class="fa icon-warning" title="Warning"></i>
 </td>
 <td class="content">
-Each manager was a singleton object in older WebDriverManager releases (e.g., 4.x), while in version 5, a  new manager instance is created each time. Therefore, the usage of <code>getDownloadedDriverPath()</code> and <code>getDownloadedDriverVersion()</code> can be different in WebDriverManager 5 (i.e., these methods needs to be invoked using a WebDriverManager instance previously created).
+Each manager was a singleton object in older WebDriverManager releases (e.g., 4.x), while in version 5, a  new manager instance is created each time. Therefore, the usage of <code>getDownloadedDriverPath()</code> and <code>getDownloadedDriverVersion()</code> can be different in WebDriverManager 5 (i.e., these methods need to be invoked using a WebDriverManager instance previously created).
 </td>
 </tr>
 </table>
@@ -1223,6 +1237,18 @@ Internally, WebDriverManager uses the content of the <a href="https://github.com
 }</code></pre>
 </div>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When using this feature, WebDriverManager stores internally a reference to the <code>WebDriver</code> objects created. In addition, a shutdown hook watches these objects are correctly released before shutting down the JVM. You can play with this feature removing the <code>teardown</code> method of the example before.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
 <p>The WebDriverManager API provides different methods to enhance the creation of <code>WebDriver</code> objects, such as:</p>
 </div>
@@ -1305,7 +1331,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 <div class="sect3">
 <h4 id="browser-versions"><a class="anchor" href="#browser-versions"></a>3.4.1. Browser Versions</h4>
 <div class="paragraph">
-<p>A significant aspect of the browser containers presented so far is that WebDriverManager connects to Docker Hub to discover the latest available release when the browser version is not specified (like the examples explained before). This way, the <em>dockerized</em> browsers of tests handled by WebDriverManager are auto-maintained, in the sense that these tests use the latest version available without any further effort.</p>
+<p>A significant aspect of the browser containers presented so far is that WebDriverManager connects to Docker Hub to discover the latest available release when the browser version is not specified (like the examples explained before). This way, the <em>dockerized</em> browsers of tests handled by WebDriverManager are auto-maintained, in the sense that these tests use the latest version available without any additional effort.</p>
 </div>
 <div class="paragraph">
 <p>Nevertheless, we can force to use a given browser version in Docker using the method <code>browserVersion()</code> of the WebDriverManager API. This method accepts a <code>String</code> parameter specifying the version. This version can be fixed (e.g., <code>91.0</code>), and it also accepts the following wildcards:</p>
@@ -1375,7 +1401,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 <div class="ulist">
 <ul>
 <li>
-<p>Virtual Network Computing (VNC), a graphical desktop sharing system. In WebDriverManager, a VNC server is started in the browser container.</p>
+<p>Virtual Network Computing (<a href="https://en.wikipedia.org/wiki/Virtual_Network_Computing">VNC</a>), a graphical desktop sharing system. In WebDriverManager, a VNC server is started in the browser container.</p>
 </li>
 <li>
 <p><a href="https://novnc.com/">noVNC</a>, a open-source web-based VNC client. In WebDriverManager, a custom <a href="https://github.com/bonigarcia/novnc">noVNC Docker image</a> is used to connect through noVNC.</p>
@@ -1505,7 +1531,38 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 <div class="sect3">
 <h4 id="advanced-settings-2"><a class="anchor" href="#advanced-settings-2"></a>3.4.4. Advanced Settings</h4>
 <div class="paragraph">
-<p>The dockerized browser provided by WebDriverManager can be configured in different ways. For example, the WebDriverManager API allows using volumes, customizing the language and timezone inside the browser container, using custom images, configuring remote Docker daemon, customizing shared memory and in-memory filesystem (<em>tmpfs</em>), changing the screen resolution and video frame rate, customizing the recording output (folder and filename), or accessing to Docker service and client to make custom operations with Docker containers (e.g., run commands in the browser container). See the <a href="#advanced-configuration">advanced configuration</a> section for specific details about it.</p>
+<p>The dockerized browser provided by WebDriverManager can be configured in different ways. For example, the WebDriverManager API allows using volumes, customizing the language and timezone inside the browser container, using custom images, configuring remote Docker daemon, customizing shared memory and in-memory filesystem (<em>tmpfs</em>), changing the screen resolution and video frame rate, or customizing the recording output (folder and filename). See the <a href="#advanced-configuration">advanced configuration</a> section for specific details about it.</p>
+</div>
+<div class="paragraph">
+<p>In addition, the WebDriverManager API provides several methods to get the most of the dockerized browsers, namely:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>getDockerRecordingPath()</code>: Get path of the session recording.</p>
+</li>
+<li>
+<p><code>getDockerNoVncUrl()</code>: Ger URL of the remote desktop noVNC session.</p>
+</li>
+<li>
+<p><code>getDockerSeleniumServerUrl()</code>: Get URL of the underlying Selenium Server (inside the container) that allows controlling the remote (dockerized) browser.</p>
+</li>
+<li>
+<p><code>getDockerService()</code>: It allows access to the Docker service and client (based on <a href="https://github.com/docker-java/docker-java">docker-java</a>) to make custom operations with Docker containers (e.g., run commands in the browser container, see example <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/docker/DockerExecCommandInContainerTest.java">here</a>).</p>
+</li>
+<li>
+<p><code>getDockerBrowserContainerId()</code>: Get browser container id (required for advance operation using the Docker client)</p>
+</li>
+<li>
+<p><code>getWebDriver()</code>: Get the previously created <code>WebDriver</code> object (the same as the returned by the method <code>create()</code>.</p>
+</li>
+<li>
+<p><code>getWebDriverList</code>: Get the previously created <code>WebDriver</code> objects (if any).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>A manager instance can be used to create more than one <code>WebDriver</code> object. For this reason, the methods <code>getDockerRecordingPath()</code>, <code>getDockerNoVncUrl()</code>, <code>getDockerSeleniumServerUrl()</code>, <code>getDockerBrowserContainerId()</code>, and <code>quit()</code> are overloaded, allowing to specify an <code>WebDriver</code> instance. When no parameter is specified in these methods, WebDriverManager returns the first <code>WebDriver</code> object (this is a usual case, i.e., a manager creates a single instance of <code>WebDriver</code>). You can see an example of a manager used to create more than one browser <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/docker/DockerSeveralBrowsersDifferentVersionsTest.java">here</a>.</p>
 </div>
 </div>
 </div>
@@ -1582,7 +1639,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>java -jar webdrivermanager-5.0.0-fat.jar resolveDriverFor=chrome</pre>
+<pre class="CodeRay highlight"><code data-lang="shell">java -jar webdrivermanager-5.0.0-fat.jar resolveDriverFor=chrome</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1594,7 +1651,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>mvn exec:java -Dexec.args="resolveDriverFor=chrome"</pre>
+<pre class="CodeRay highlight"><code data-lang="shell">mvn exec:java -Dexec.args=&quot;resolveDriverFor=chrome&quot;</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1606,7 +1663,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>docker run --rm -v ${PWD}:/wdm -e ARGS="resolveDriverFor=chrome" bonigarcia/webdrivermanager:5.0.0</pre>
+<pre class="CodeRay highlight"><code data-lang="shell">docker run --rm -v ${PWD}:/wdm -e ARGS=&quot;resolveDriverFor=chrome&quot; bonigarcia/webdrivermanager:5.0.0</code></pre>
 </div>
 </div>
 <h4 id="option-2-browsers-in-docker" class="discrete">Option 2: Browsers in Docker</h4>
@@ -1622,7 +1679,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>java -jar webdrivermanager-5.0.0-fat.jar runInDocker=chrome</pre>
+<pre class="CodeRay highlight"><code data-lang="shell">java -jar webdrivermanager-5.0.0-fat.jar runInDocker=chrome</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1634,7 +1691,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>mvn exec:java -Dexec.args="runInDocker=chrome"</pre>
+<pre class="CodeRay highlight"><code data-lang="shell">mvn exec:java -Dexec.args=&quot;runInDocker=chrome&quot;</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1646,7 +1703,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -e ARGS="runInDocker=chrome 91" bonigarcia/webdrivermanager:5.0.0</pre>
+<pre class="CodeRay highlight"><code data-lang="shell">docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -e ARGS=&quot;runInDocker=chrome 91&quot; bonigarcia/webdrivermanager:5.0.0</code></pre>
 </div>
 </div>
 <div class="admonitionblock warning">
@@ -1674,7 +1731,7 @@ There is an <a href="https://bugs.chromium.org/p/chromedriver/issues/detail?id=3
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>java -jar webdrivermanager-5.0.0-fat.jar server</pre>
+<pre class="CodeRay highlight"><code data-lang="shell">java -jar webdrivermanager-5.0.0-fat.jar server</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1686,7 +1743,7 @@ There is an <a href="https://bugs.chromium.org/p/chromedriver/issues/detail?id=3
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>mvn exec:java -Dexec.args="server"</pre>
+<pre class="CodeRay highlight"><code data-lang="shell">mvn exec:java -Dexec.args=&quot;server&quot;</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1698,14 +1755,14 @@ There is an <a href="https://bugs.chromium.org/p/chromedriver/issues/detail?id=3
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>docker run --rm -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock bonigarcia/webdrivermanager:5.0.0</pre>
+<pre class="CodeRay highlight"><code data-lang="shell">docker run --rm -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock bonigarcia/webdrivermanager:5.0.0</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="wdm-server"><a class="anchor" href="#wdm-server"></a>4.2. WDM Server</h3>
 <div class="paragraph">
-<p>The WebDriverManager Server is based on HTTP and offers two types of services. First, it can be used to resolve drivers (chromedriver, geckodriver, etc.). The WebDriverManager Server exposes a REST-like API to this aim. WebDriverManager Server sends the resolved driver as an HTTP attachment in the response. The endpoints provided by this API are the following (supposing that WebDriverManager is running the localhost in its default port, i.e., 4444):</p>
+<p>The WebDriverManager Server is based on HTTP and offers two types of services. First, it can be used to resolve drivers (chromedriver, geckodriver, etc.). The WebDriverManager Server exposes a simple REST-like API to this aim. WebDriverManager Server sends the resolved driver as an HTTP attachment in the response. The endpoints provided by this API are the following (supposing that WebDriverManager is running the localhost in its default port, i.e., 4444):</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1727,7 +1784,7 @@ There is an <a href="https://bugs.chromium.org/p/chromedriver/issues/detail?id=3
 </ul>
 </div>
 <div class="paragraph">
-<p>Second, the WebDriverManager Server acts as a regular Selenium Server (i.e., a <em>hub</em> in the classical <a href="https://www.selenium.dev/documentation/en/grid/">Selenium Grid</a> architecture). This feature can be used to create remote `WebDriver instances using the WebDriverManager Server (even for different language bindings than Java). The following example shows a Node.js test using Selenium WebDriver and WebDriverManager Server (notice that by default, the WebDriverManager Server URL does not require any path, i.e., <a href="http://localhost:4444/">http://localhost:4444/</a>):</p>
+<p>Second, the WebDriverManager Server acts as a regular Selenium Server (i.e., a <em>hub</em> in the classical <a href="https://www.selenium.dev/documentation/en/grid/">Selenium Grid</a> architecture). This feature can be used to create remote <code>WebDriver</code> instances using the WebDriverManager Server (even for different language bindings than Java). The following example shows a Node.js test using Selenium WebDriver and WebDriverManager Server (notice that by default, the WebDriverManager Server URL does not require any path, i.e., <a href="http://localhost:4444/">http://localhost:4444/</a>):</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1834,7 +1891,7 @@ wdmServerTest();</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Selenium-Jupiter provides more different features, such as seamless integration with Docker, test templates (for cross-browser testing), conditional test execution (depending on the availability of browsers), conditional screenshots, and recordings (when tests fail), and more. For further details, read the <a href="https://bonigarcia.org/selenium-jupiter/">Selenium-Jupiter documentation</a>.</p>
+<p>Selenium-Jupiter provides more different features, such as seamless integration with Docker, test templates (for cross-browser testing), conditional test execution (depending on the availability of browsers), conditional screenshots and recordings (when tests fail), and more. For further details, read the <a href="https://bonigarcia.org/selenium-jupiter/">Selenium-Jupiter documentation</a>.</p>
 </div>
 </div>
 </div>
@@ -1887,13 +1944,13 @@ WebDriverManager.edgedriver().mac().setup();</code></pre>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-In addition to the methods presented in the following tables, each manager provides a method called <code>config()</code> that allows configuring all the possible parameters of WebDriverManager.
+In addition to the methods presented in this section, each manager provides a method called <code>config()</code> that allows configuring all the possible parameters of WebDriverManager. In addition, WebDriverManager provides the metho <code>reset()</code> to restore to the default values the parameters of a given manager.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>The second alternative to tune WebDriverManager is using <em>Java system properties</em>.  In this method, each WebDriverManager API method has its equivalence of one of a unique <em>configuration key</em>. For instance, the API method <code>cachePath()</code> (used to specify the driver cache folder) is equivalent to the configuration key <code>wdm.cachePath</code>. These types of configuration keys are set as Java system properties and can be passed when executing the test, for example, using Maven:</p>
+<p>The second alternative to tune WebDriverManager is using <em>Java system properties</em>.  In this method, each WebDriverManager API method has its equivalence of one of a unique <em>configuration key</em>. For instance, the API method <code>cachePath()</code> (used to specify the driver cache folder) is equivalent to the configuration key <code>wdm.cachePath</code>. These types of configuration keys can be passed when executing the tests, for example, using Maven:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1901,7 +1958,7 @@ In addition to the methods presented in the following tables, each manager provi
 </div>
 </div>
 <div class="paragraph">
-<p>The third way to configure WebDriverManager is using <em>environmental variables</em>. The names for these variables appear from converting each configuration key name (e.g., <code>wdm.cachePath</code>) to uppercase, replacing the symbol <code>.</code> by <code>_</code> (e.g., <code>WDM_CACHEPATH</code>). This alternative can be helpful to global setup parameters at the operating system level and for specifying parameters when using WebDriverManager as a Docker container. For example:</p>
+<p>The third way to configure WebDriverManager is using <em>environmental variables</em>. The names for these variables are made from converting each configuration key name (e.g., <code>wdm.cachePath</code>) to uppercase and replacing the symbol <code>.</code> with <code>_</code> (e.g., <code>WDM_CACHEPATH</code>). These variables can be helpful to global setup parameters at the operating system level. Also, it allows specifying a custom setup when using WebDriverManager as a Docker container. For example:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2034,7 +2091,7 @@ The preference order of these configuration alternatives is (in case of overlapp
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>useMirror()</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>wdm.useMirror=true</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>false</code> (not using mirrors)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Enable the use of an existing <a href="https://npm.taobao.org/mirrors/">mirror</a> (available for chromedriver, geckodriver, and operadriver)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable the use of a driver repository <a href="https://npm.taobao.org/mirrors/">mirror</a> (available for chromedriver, geckodriver, and operadriver)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>proxy(String)</code></p></td>
@@ -2079,7 +2136,7 @@ HTTP proxy. It can be also configured using the environment variable  <code>HTTP
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>properties(String)</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>wdm.properties</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>webdrivermanager.properties</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Properties file (in the project classpath) for configuration values</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Properties file (in the project classpath) for default configuration values</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>avoidExport()</code></p></td>
@@ -2156,7 +2213,7 @@ HTTP proxy. It can be also configured using the environment variable  <code>HTTP
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>commandsPropertiesUrl(URL)</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>wdm.commandsPropertiesUrl</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Raw version of the online <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/main/resources/commands.properties">cmands database</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Raw version of the online <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/main/resources/commands.properties">commands database</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Change commands database URL</p></td>
 </tr>
 <tr>
@@ -2212,7 +2269,7 @@ HTTP proxy. It can be also configured using the environment variable  <code>HTTP
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>dockerTimezone(String)</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>wdm.dockerTimezone</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Etc/UTC</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">Timezone</a> in browser container</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">Timezone</a> of the browser container</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>dockerNetwork(String)</code></p></td>
@@ -2224,7 +2281,7 @@ HTTP proxy. It can be also configured using the environment variable  <code>HTTP
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>dockerLang(String)</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>wdm.dockerLang</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>EN</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">Languge</a> in Docker container</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes">Language</a> of the browser container</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>dockerShmSize(String)</code></p></td>
@@ -2296,7 +2353,7 @@ HTTP proxy. It can be also configured using the environment variable  <code>HTTP
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>dockerVolume(String)</code> <code>dockerVolumes(String[])</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>wdm.dockerVolumes</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>""</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Comma-separated volumes (or string array) using the format <code>"\local\path:\container\path"</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Docker volumes (single or array) using the format <code>"\local\path:\container\path"</code></p></td>
 </tr>
 </tbody>
 </table>
@@ -2383,7 +2440,7 @@ HTTP proxy. It can be also configured using the environment variable  <code>HTTP
 </div>
 <h4 id="chrome-92-in-docker" class="discrete">Chrome 92+ in Docker</h4>
 <div class="paragraph">
-<p>There is an <a href="https://bugs.chromium.org/p/chromedriver/issues/detail?id=3857">open issue</a> with Chrome 92+ and Docker at the time of this writing. The problem can be solved to some extent by using the argument <code>--disable-gpu</code> in Chrome and Edge. This argument already passed to these containers to avoid the issue. Nevertheless, some situations are still impossible to fix (e.g., when using <a href="https://hub.docker.com/r/bonigarcia/webdrivermanager" class="bare">https://hub.docker.com/r/bonigarcia/webdrivermanager</a>[WebDriverManager in Docker in the CLI or Server mode).</p>
+<p>There is an <a href="https://bugs.chromium.org/p/chromedriver/issues/detail?id=3857">open issue</a> with Chrome 92+ and Docker at the time of this writing. The problem can be solved to some extent by using the argument <code>--disable-gpu</code> in Chrome and Edge. This argument is used by WebDriverManager 5 to avoid the issue. Nevertheless, some situations are still impossible to fix (e.g., when using <a href="https://hub.docker.com/r/bonigarcia/webdrivermanager">WebDriverManager in Docker</a> as CLI or Server).</p>
 </div>
 </div>
 </div>
@@ -2391,7 +2448,7 @@ HTTP proxy. It can be also configured using the environment variable  <code>HTTP
 <h2 id="support"><a class="anchor" href="#support"></a>8. Support</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>There are several ways to try to get community support related WebDriverManager. First, questions about WebDriverManager can be discussed in <a href="https://stackoverflow.com/questions/tagged/webdrivermanager_java">StackOverflow</a>, using the tag <em>webdrivermanager_java</em>. In addition, comments, suggestions, and bug-reporting should be made using the <a href="https://github.com/bonigarcia/webdrivermanager/issues">GitHub issues</a>.</p>
+<p>There are two ways to try to get community support related WebDriverManager. First, questions about WebDriverManager can be discussed in <a href="https://stackoverflow.com/questions/tagged/webdrivermanager_java">StackOverflow</a>, using the tag <em>webdrivermanager_java</em>. In addition, comments, suggestions, and bug-reporting should be made using the <a href="https://github.com/bonigarcia/webdrivermanager/issues">GitHub issues</a>.</p>
 </div>
 </div>
 </div>
@@ -2402,7 +2459,7 @@ HTTP proxy. It can be also configured using the environment variable  <code>HTTP
 <p>If you think WebDriverManager can be enhanced, consider contributing to the project through a  <a href="https://github.com/bonigarcia/webdrivermanager/pulls">pull request</a>.</p>
 </div>
 <div class="paragraph">
-<p>In addition, both <a href="https://opencollective.com/webdrivermanager">WebDriverManager</a> and <a href="https://opencollective.com/selenium-jupiter">Selenium-Jupiter</a> are in <a href="https://opencollective.com/bonigarcia">OpenCollective</a>, an online funding platform for open and transparent communities. You can contribute as a <a href="https://opencollective.com/webdrivermanager/donate">donation</a> (i.e., an individual custom contribution), as a <a href="https://opencollective.com/webdrivermanager/contribute/backer-8132/checkout">backer</a> (i.e., an individual recurring contribution),  or as <a href="https://opencollective.com/webdrivermanager/contribute/sponsor-8133/checkout">sponsor</a> (i.e., a recurring contribution by a company).</p>
+<p>In addition, both <a href="https://opencollective.com/webdrivermanager">WebDriverManager</a> and <a href="https://opencollective.com/selenium-jupiter">Selenium-Jupiter</a> are part of <a href="https://opencollective.com/bonigarcia">OpenCollective</a>, an online funding platform for open and transparent communities. You can contribute with the project as a <a href="https://opencollective.com/webdrivermanager/donate">donation</a> (i.e., an individual custom contribution), as a <a href="https://opencollective.com/webdrivermanager/contribute/backer-8132/checkout">backer</a> (i.e., an individual recurring contribution),  or as <a href="https://opencollective.com/webdrivermanager/contribute/sponsor-8133/checkout">sponsor</a> (i.e., a recurring contribution by a company).</p>
 </div>
 </div>
 </div>

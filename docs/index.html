@@ -8,9 +8,9 @@
 <meta name="author" content="Boni García">
 <title>WebDriverManager</title>
 <style>
-@import url(http://fonts.googleapis.com/css?family=Titillium+Web:400,700);
-@import url(http://fonts.googleapis.com/css?family=Noticia+Text:400,400italic);
-@import url(http://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.0/css/font-awesome.css);
+@import url(//fonts.googleapis.com/css?family=Titillium+Web:400,700);
+@import url(//fonts.googleapis.com/css?family=Noticia+Text:400,400italic);
+@import url(//cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.0/css/font-awesome.css);
 /* Derived from the Riak documentation theme developed by Basho Technologies, Inc. | CC BY 3.0 License | http://docs.basho.org */
 /* normalize.css v2.1.1 | MIT License | git.io/normalize */
 /* ========================================================================== HTML5 display definitions ========================================================================== */
@@ -810,6 +810,8 @@ table.CodeRay td.code{padding:0 0 0 .75em}
 <li><a href="#webdrivermanager-server">4.2. WebDriverManager Server</a></li>
 <li><a href="#webdrivermanager-agent">4.3. WebDriverManager Agent</a></li>
 <li><a href="#selenium-jupiter">4.4. Selenium-Jupiter</a></li>
+<li><a href="#selenium-grid">4.5. Selenium Grid</a></li>
+<li><a href="#appium">4.6. Appium</a></li>
 </ul>
 </li>
 <li><a href="#examples">5. Examples</a></li>
@@ -982,7 +984,7 @@ WebDriverManager.iedriver().setup();</code></pre>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Although not mandatory, it is highly recommended to use a logger library to trace your application and tests. In the case of WebDriverManager, you will see the relevant steps of the driver management following its traces. See for example the following <a href="https://www.stubbornjava.com/posts/logging-in-java-with-slf4j-and-logback)">tutorial</a> to use <a href="http://www.slf4j.org/">SLF4J </a> and <a href="http://logback.qos.ch/">Logback</a>. Also, you can see an example of a WebDriverManager test using logging <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/firefox/FirefoxTest.java">here</a>.
+Although not mandatory, it is highly recommended to use a logger library to trace your application and tests. In the case of WebDriverManager, you will see the relevant steps of the driver management following its traces. See for example the following <a href="https://www.stubbornjava.com/posts/logging-in-java-with-slf4j-and-logback)">tutorial</a> to use <a href="http://www.slf4j.org/">SLF4J </a> and <a href="http://logback.qos.ch/">Logback</a>. Also, you can see an example of a WebDriverManager test using logging <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/firefox/FirefoxTest.java">here</a> (this example uses this <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/main/resources/logback.xml">configuration file</a>).
 </td>
 </tr>
 </table>
@@ -1027,7 +1029,7 @@ This process is different for each browser. In Chrome and Edge, their respective
 <p><code>getInstance(DriverManagerType driverManagerType)</code>: Where <code>driverManagerType</code> is an <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/main/java/io/github/bonigarcia/wdm/config/DriverManagerType.java">enumeration</a> provided by WebDriverManager to identify the available managers.</p>
 </li>
 <li>
-<p><code>getInstance(String browserName)</code>: Where <code>browserName</code> is the usual browser name as <code>String</code> (e.g., <code>"Chrome"</code>, <code>"Firefox"</code>, <code>"Edge"</code>, etc.).</p>
+<p><code>getInstance(String browserName)</code>: Where <code>browserName</code> is the usual browser name as <code>String</code> (i.e., <code>"Chrome"</code>, <code>"Firefox"</code>, <code>"Edge"</code>, <code>"Opera"</code>, <code>"Chromium"</code>, or <code>"IExplorer"</code>).</p>
 </li>
 <li>
 <p><code>getInstance()</code>: If no parameter is specified, the configuration key <code>wdm.defaultBrowser</code> is used to select the manager (Chrome by default). See the <a href="#advanced-configuration">advanced configuration</a> section for further information about the configuration capabilities of WebDriverManager.</p>
@@ -1225,12 +1227,8 @@ Internally, WebDriverManager uses the content of the <a href="https://github.com
 
     <span class="annotation">@Test</span>
     <span class="type">void</span> test() {
-        <span class="comment">// Exercise</span>
         driver.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">https://bonigarcia.org/webdrivermanager/</span><span class="delimiter">&quot;</span></span>);
-        <span class="predefined-type">String</span> title = driver.getTitle();
-
-        <span class="comment">// Verify</span>
-        assertThat(title).contains(<span class="string"><span class="delimiter">&quot;</span><span class="content">WebDriverManager</span><span class="delimiter">&quot;</span></span>);
+        assertThat(driver.getTitle()).contains(<span class="string"><span class="delimiter">&quot;</span><span class="content">WebDriverManager</span><span class="delimiter">&quot;</span></span>);
     }
 
 }</code></pre>
@@ -1254,15 +1252,63 @@ When using this feature, WebDriverManager stores internally a reference to the <
 <div class="ulist">
 <ul>
 <li>
+<p>Integer parameter in the method <code>create()</code>. This option is used to create a list of <code>WebDriver</code> objects instead of a single instance. See <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/create/ChromeListCreateTest.java">example</a>.</p>
+</li>
+<li>
 <p>Method <code>capabilities()</code>: To specify WebDriver <code>Capabilities</code> (see <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/create/ChromeCapabilitiesCreateTest.java">example</a>).</p>
 </li>
 <li>
-<p>Method <code>remoteAddress()</code>: To specify the remote URL in the <code>RemoteWebDriver</code> instance (typically when using a Selenium Server). See <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/create/ChromeRemoteTest.java">example</a>. This method is equivalent to the configuration key <code>wdm.remoteAddress</code> (see <a href="#advanced-configuration">configuration</a> section).</p>
-</li>
-<li>
-<p>Integer parameter in the method <code>create()</code>. This option is used to create a list of <code>WebDriver</code> objects instead of a single instance. See <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/create/ChromeListCreateTest.java">example</a>.</p>
+<p>Method <code>remoteAddress()</code>: To specify the remote URL in the <code>RemoteWebDriver</code> instance (typically when using a Selenium Server). This method is equivalent to the configuration key <code>wdm.remoteAddress</code> (see <a href="#advanced-configuration">configuration</a> section). The following example shows a test using this method. Notice that this test starts <a href="https://www.selenium.dev/documentation/en/grid/">Selenium Grid</a> in standalone mode before the test. To that, WebDriverManager is also used (since the browser controlled by Selenium Grid also requires a driver):</p>
 </li>
 </ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">import</span> <span class="include">static</span> <span class="include">org.assertj.core.api.Assertions.assertThat</span>;
+
+<span class="keyword">import</span> <span class="include">org.junit.jupiter.api.AfterEach</span>;
+<span class="keyword">import</span> <span class="include">org.junit.jupiter.api.BeforeAll</span>;
+<span class="keyword">import</span> <span class="include">org.junit.jupiter.api.BeforeEach</span>;
+<span class="keyword">import</span> <span class="include">org.junit.jupiter.api.Test</span>;
+<span class="keyword">import</span> <span class="include">org.openqa.selenium.WebDriver</span>;
+<span class="keyword">import</span> <span class="include">org.openqa.selenium.grid.Main</span>;
+
+<span class="keyword">import</span> <span class="include">io.github.bonigarcia.wdm.WebDriverManager</span>;
+
+<span class="type">class</span> <span class="class">ChromeRemoteTest</span> {
+
+    WebDriver driver;
+
+    <span class="annotation">@BeforeAll</span>
+    <span class="directive">static</span> <span class="type">void</span> setupClass() {
+        <span class="comment">// Resolve driver for Selenium Grid</span>
+        WebDriverManager.chromedriver().setup();
+
+        <span class="comment">// Start Selenium Grid in standalone mode</span>
+        Main.main(<span class="keyword">new</span> <span class="predefined-type">String</span><span class="type">[]</span> { <span class="string"><span class="delimiter">&quot;</span><span class="content">standalone</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">--port</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">4444</span><span class="delimiter">&quot;</span></span> });
+    }
+
+    <span class="annotation">@BeforeEach</span>
+    <span class="type">void</span> setupTest() {
+        driver = WebDriverManager.chromedriver()
+                .remoteAddress(<span class="string"><span class="delimiter">&quot;</span><span class="content">http://localhost:4444/wd/hub</span><span class="delimiter">&quot;</span></span>).create();
+    }
+
+    <span class="annotation">@AfterEach</span>
+    <span class="type">void</span> teardown() {
+        <span class="keyword">if</span> (driver != <span class="predefined-constant">null</span>) {
+            driver.quit();
+        }
+    }
+
+    <span class="annotation">@Test</span>
+    <span class="type">void</span> test() {
+        driver.get(<span class="string"><span class="delimiter">&quot;</span><span class="content">https://bonigarcia.org/webdrivermanager/</span><span class="delimiter">&quot;</span></span>);
+        assertThat(driver.getTitle()).contains(<span class="string"><span class="delimiter">&quot;</span><span class="content">WebDriverManager</span><span class="delimiter">&quot;</span></span>);
+    }
+
+}</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1319,13 +1365,34 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 </table>
 </div>
 <div class="paragraph">
-<p>The used Docker images by WebDriverManager have been created and maintained by <a href="https://aerokube.com/images/latest/">Aerokube</a>. Therefore, the available browsers to be executed as Docker containers in WebDriverManager are: Chrome (like the previous example), Firefox (see <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/docker/DockerFirefoxTest.java">example</a>), Edge (see <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/docker/DockerEdgeTest.java">example</a>), Opera (see <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/docker/DockerOperaTest.java">example</a>), and Safari (see <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/docker/DockerSafariTest.java">example</a>).</p>
+<p>The used Docker images by Selenium-Jupiter have been created and maintained by <a href="https://aerokube.com/selenoid/">Aerokube</a> (you can check the available versions on the <a href="https://aerokube.com/images/latest/">browser images</a> page). Therefore, the available browsers to be executed as Docker containers in WebDriverManager are Chrome (like the previous example), <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/docker/DockerFirefoxTest.java">Firefox</a>, <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/docker/DockerEdgeTest.java">Edge</a>, <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/docker/DockerOperaTest.java">Opera</a>, and <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/docker/DockerSafariTest.java">Safari</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The case of Safari is particular since a real Safari browser can only be executed under a Mac OS machine. This way, the <em>Safari</em> Docker containers use the <a href="https://webkit.org/">WebKit engine</a>. This engine is the same used in browser containers, and therefore, from a functional point of view, both browsers (a real Safari and this Docker image) should behave in the same way.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>The case of Safari is particular since a real Safari browser can only be executed under a Mac OS machine. This way, the <em>Safari</em> Docker containers use the <a href="https://webkit.org/">WebKit engine</a>. This engine is the same used in browser containers, and therefore, from a functional point of view, both browsers (a real Safari and this Docker image) should behave in the same way.</p>
+<p>In addition to these browsers, there is one more alternative: Chrome Mobile (i.e., Chrome on an Android device). To use this browser, you need to invoke the method <code>browserInDockerAndroid()</code> of a Chrome manager, just like in this <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/docker/DockerChromeMobileTest.java">example</a>.</p>
 </div>
-<div class="paragraph">
-<p>In addition to these browsers, there is one more alternative: Chrome Mobile (i.e., Chrome on an Android device). To use this browser, you need to invoke the method <code>browserInDockerAndroid()</code> of a Chrome manager, just like in this <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/docker/DockerChromeMobileTest.java">example</a>. Notice that a hardware server or virtual machine with nested virtualization support is required to run Chrome Mobile images.</p>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Notice you will need hardware virtualization (hypervisor) or a virtual machine with nested virtualization support to run Chrome Mobile images.
+</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
 <h4 id="browser-versions"><a class="anchor" href="#browser-versions"></a>3.4.1. Browser Versions</h4>
@@ -1581,7 +1648,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Using the WebDriverManager <em>fat-JAR</em> (i.e., WebDriverManager with all its dependencies in a single executable JAR file). This JAR file is released on GitHub with every new version of WebDriverManager. You can download the latest version from <a href="https://github.com/bonigarcia/webdrivermanager/releases/download/webdrivermanager-5.0.0/webdrivermanager-5.0.0-fat.jar">here</a>. Once you get this file, you  need to use the following command in the shell (where <code>&lt;args&gt;</code> are the accepted arguments, explained below):</p>
+<p>Using the WebDriverManager <em>fat-JAR</em> (i.e., WebDriverManager with all its dependencies in a single executable JAR file). This JAR file is generated from the source using the Maven command <code>mvn compile assembly:single</code>, and it is released on GitHub with every new version of WebDriverManager. You can download the latest of this fat-JAR from <a href="https://github.com/bonigarcia/webdrivermanager/releases/download/webdrivermanager-5.0.0/webdrivermanager-5.0.0-fat.jar">here</a>. Once you get this file, you  need to use the following command in the shell (where <code>&lt;args&gt;</code> are the accepted arguments, explained below):</p>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="shell">java -jar webdrivermanager-5.0.0-fat.jar &lt;args&gt;</code></pre>
@@ -1613,15 +1680,15 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="shell">[ERROR] The valid arguments for WebDriverManager CLI are:
 [ERROR] 1. For resolving drivers locally:
-[ERROR]     resolveDriverFor=browserName &lt;driverVersion&gt;
+[ERROR]         resolveDriverFor browserName &lt;driverVersion&gt;
 [ERROR] (where browserName is: chrome|edge|firefox|opera|chromium|iexplorer)
 [ERROR]
 [ERROR] 2. For running a browser in a Docker (and use it trough noVNC):
-[ERROR]     runInDocker=browserName &lt;browserVersion&gt;
-[ERROR] (where browserName=chrome|edge|firefox|opera|safari|chrome-mobile)
+[ERROR]         runInDocker browserName &lt;browserVersion&gt;
+[ERROR] (where browserName is: chrome|edge|firefox|opera|safari|chrome-mobile)
 [ERROR]
 [ERROR] 3. For starting WebDriverManager Server:
-[ERROR]     server &lt;port&gt;
+[ERROR]         server &lt;port&gt;
 [ERROR] (where the default port is 4444)</code></pre>
 </div>
 </div>
@@ -1638,7 +1705,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">java -jar webdrivermanager-5.0.0-fat.jar resolveDriverFor=chrome</code></pre>
+<pre class="CodeRay highlight"><code data-lang="shell">java -jar webdrivermanager-5.0.0-fat.jar resolveDriverFor chrome</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1650,7 +1717,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">mvn exec:java -Dexec.args=&quot;resolveDriverFor=chrome&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="shell">mvn exec:java -Dexec.args=&quot;resolveDriverFor chrome&quot;</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1662,7 +1729,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">docker run --rm -v ${PWD}:/wdm -e ARGS=&quot;resolveDriverFor=chrome&quot; bonigarcia/webdrivermanager:5.0.0</code></pre>
+<pre class="CodeRay highlight"><code data-lang="shell">docker run --rm -v ${PWD}:/wdm -e ARGS=&quot;resolveDriverFor chrome&quot; bonigarcia/webdrivermanager:5.0.0</code></pre>
 </div>
 </div>
 <h4 id="option-2-browsers-in-docker" class="discrete">Option 2: Browsers in Docker</h4>
@@ -1678,7 +1745,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">java -jar webdrivermanager-5.0.0-fat.jar runInDocker=chrome</code></pre>
+<pre class="CodeRay highlight"><code data-lang="shell">java -jar webdrivermanager-5.0.0-fat.jar runInDocker chrome</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1690,7 +1757,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">mvn exec:java -Dexec.args=&quot;runInDocker=chrome&quot;</code></pre>
+<pre class="CodeRay highlight"><code data-lang="shell">mvn exec:java -Dexec.args=&quot;runInDocker chrome&quot;</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -1702,7 +1769,7 @@ When using browsers in Docker containers, the call to the method <code>quit()</c
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -e ARGS=&quot;runInDocker=chrome 91&quot; bonigarcia/webdrivermanager:5.0.0</code></pre>
+<pre class="CodeRay highlight"><code data-lang="shell">docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock -e ARGS=&quot;runInDocker chrome 91&quot; bonigarcia/webdrivermanager:5.0.0</code></pre>
 </div>
 </div>
 <div class="admonitionblock warning">
@@ -1783,7 +1850,7 @@ There is an <a href="https://bugs.chromium.org/p/chromedriver/issues/detail?id=3
 </ul>
 </div>
 <div class="paragraph">
-<p>Second, the WebDriverManager Server acts as a regular Selenium Server (i.e., a <em>hub</em> in the classical <a href="https://www.selenium.dev/documentation/en/grid/">Selenium Grid</a> architecture). This feature can be used to create remote <code>WebDriver</code> instances using the WebDriverManager Server (even for different language bindings than Java). The following example shows a Node.js test using Selenium WebDriver and WebDriverManager Server (notice that by default, the WebDriverManager Server URL does not require any path, i.e., <a href="http://localhost:4444/">http://localhost:4444/</a>):</p>
+<p>Second, the WebDriverManager Server acts as a regular Selenium Server (i.e., a <em>hub</em> in the classical Selenium Grid). This feature can be used to create remote <code>WebDriver</code> instances using the WebDriverManager Server (even for different language bindings than Java). The following example shows a Node.js test using Selenium WebDriver and WebDriverManager Server (notice that by default, the WebDriverManager Server URL does not require any path, i.e., <a href="http://localhost:4444/">http://localhost:4444/</a>):</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1893,13 +1960,80 @@ wdmServerTest();</code></pre>
 <p>Selenium-Jupiter provides more different features, such as seamless integration with Docker, test templates (for cross-browser testing), conditional test execution (depending on the availability of browsers), conditional screenshots and recordings (when tests fail), and more. For further details, read the <a href="https://bonigarcia.org/selenium-jupiter/">Selenium-Jupiter documentation</a>.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="selenium-grid"><a class="anchor" href="#selenium-grid"></a>4.5. Selenium Grid</h3>
+<div class="paragraph">
+<p><a href="https://www.selenium.dev/documentation/en/grid/">Selenium Grid</a> is an infrastructure that allows serving remote browsers to be used in Selenium WebDriver tests. The nodes in which the browsers are executed in Selenium Grid also require managing the required drivers (chromedriver, geckodriver, etc.). To manage these drivers, as usual, we can use WebDriverManager.</p>
+</div>
+<div class="paragraph">
+<p>For example, this <a href="https://github.com/bonigarcia/webdrivermanager/blob/master/src/test/java/io/github/bonigarcia/wdm/test/create/ChromeRemoteTest.java">test</a> shows how to start a Selenium Grid in standalone mode, resolving the driver with WebDriverManager and registering a Chrome browser in the Selenium Server. In addition, if we start Selenium Grid from the shell, we can complement it with WebDriverManager CLI to resolve the required drivers, as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="shell">boni@ubuntu:~$ java -jar webdrivermanager-5.0.0-fat.jar resolveDriverFor chrome
+[INFO] Using WebDriverManager to resolve chrome
+[DEBUG] Detecting chrome version using online commands.properties
+[DEBUG] Running command on the shell: [google-chrome, --version]
+[DEBUG] Result: Google Chrome 92.0.4515.107
+[DEBUG] Latest version of chromedriver according to https://chromedriver.storage.googleapis.com/LATEST_RELEASE_92 is 92.0.4515.107
+[INFO] Using chromedriver 92.0.4515.107 (resolved driver for Chrome 92)
+[INFO] Reading https://chromedriver.storage.googleapis.com/ to seek chromedriver
+[DEBUG] Driver to be downloaded chromedriver 92.0.4515.107
+[INFO] Downloading https://chromedriver.storage.googleapis.com/92.0.4515.107/chromedriver_linux64.zip
+[INFO] Extracting driver from compressed file chromedriver_linux64.zip
+[INFO] Driver location: /home/boni/chromedriver
+
+boni@ubuntu:~$ java -jar selenium-server-4.0.0-beta-4.jar standalone
+20:19:03.815 INFO [LoggingOptions.configureLogEncoding] - Using the system default encoding
+20:19:03.818 INFO [OpenTelemetryTracer.createTracer] - Using OpenTelemetry for tracing
+20:19:04.272 INFO [NodeOptions.getSessionFactories] - Detected 8 available processors
+20:19:04.284 INFO [NodeOptions.discoverDrivers] - Discovered 1 driver(s)
+20:19:04.296 INFO [NodeOptions.report] - Adding Chrome for {&quot;browserName&quot;: &quot;chrome&quot;,&quot;platformName&quot;: &quot;LINUX&quot;} 8 times
+20:19:04.310 INFO [Node.&lt;init&gt;] - Binding additional locator mechanisms: name, id
+20:19:04.322 INFO [LocalDistributor.add] - Added node 4651dc4d-3e07-43e7-b8d5-7368c95ea76d at http://172.17.0.1:4444.
+20:19:04.324 INFO [GridModel.setAvailability] - Switching node 4651dc4d-3e07-43e7-b8d5-7368c95ea76d (uri: http://172.17.0.1:4444) from DOWN to UP
+20:19:04.438 INFO [Standalone.execute] - Started Selenium Standalone 4.0.0-beta-4 (revision 29f46d02dd): http://172.17.0.1:4444</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="appium"><a class="anchor" href="#appium"></a>4.6. Appium</h3>
+<div class="paragraph">
+<p><a href="https://appium.io/">Appium</a> is a test automation framework for mobile applications. In the same way that Selenium WebDriver, Appium also speaks the W3C WebDriver protocol to drive web browsers on mobile devices. For this reason, the required driver must be present to control mobile browsers with Appium.</p>
+</div>
+<div class="paragraph">
+<p>Again, WebDriverManager can help in this task. The following snippet shows a Java method that creates a <code>WebDriver</code> object using the driver path for Chrome browser in an Android device:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java">    <span class="directive">public</span> WebDriver createChromeAndroidDriver(<span class="predefined-type">String</span> browserVersion,
+            <span class="predefined-type">String</span> deviceName, <span class="predefined-type">URL</span> appiumServerUrl) {
+        <span class="comment">// Resolve driver and get its path</span>
+        WebDriverManager wdm = WebDriverManager.chromedriver()
+                .browserVersion(browserVersion);
+        wdm.setup();
+        <span class="predefined-type">String</span> chromedriverPath = wdm.getDownloadedDriverPath();
+
+        <span class="comment">// Create WebDriver instance using the driver path</span>
+        DesiredCapabilities capabilities = <span class="keyword">new</span> DesiredCapabilities();
+        capabilities.setCapability(<span class="string"><span class="delimiter">&quot;</span><span class="content">browserName</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">chrome</span><span class="delimiter">&quot;</span></span>);
+        capabilities.setCapability(<span class="string"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span>, browserVersion);
+        capabilities.setCapability(<span class="string"><span class="delimiter">&quot;</span><span class="content">deviceName</span><span class="delimiter">&quot;</span></span>, deviceName);
+        capabilities.setCapability(<span class="string"><span class="delimiter">&quot;</span><span class="content">platformName</span><span class="delimiter">&quot;</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="content">android</span><span class="delimiter">&quot;</span></span>);
+        capabilities.setCapability(<span class="string"><span class="delimiter">&quot;</span><span class="content">chromedriverExecutable</span><span class="delimiter">&quot;</span></span>, chromedriverPath);
+
+        <span class="keyword">return</span> <span class="keyword">new</span> AndroidDriver&lt;WebElement&gt;(appiumServerUrl, capabilities);
+    }</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="examples"><a class="anchor" href="#examples"></a>5. Examples</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following repositories contain different examples using WebDriverManager:</p>
+<p>All the examples presented in this documentation are available in the <a href="https://github.com/bonigarcia/webdrivermanager/tree/master/src/test/java/io/github/bonigarcia/wdm/test/">WebDriverManager tests</a>. Moreover, different public repositories contain test examples using WebDriverManager, such as:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1916,7 +2050,7 @@ wdmServerTest();</code></pre>
 <p><a href="https://github.com/bonigarcia/wdm-agent-example">WebDriverManager Agent Example</a>: Maven project using WebDriverManager as Agent.</p>
 </li>
 <li>
-<p><a href="https://github.com/bonigarcia/selenium-jupiter-examples">Selenium-Jupiter Examples</a>: Examples using JUnit 5 and <a href="#selenium-jupiter">Selenium-Jupiter</a>.</p>
+<p><a href="https://github.com/bonigarcia/selenium-webdriver-java">Selenium WebDriver with Java</a>: A comprehensive collection of Selenium WebDriver 4 examples using Java as language binding.</p>
 </li>
 </ul>
 </div>
@@ -1949,7 +2083,7 @@ In addition to the methods presented in this section, each manager provides a me
 </table>
 </div>
 <div class="paragraph">
-<p>The second alternative to tune WebDriverManager is using <em>Java system properties</em>.  In this method, each WebDriverManager API method has its equivalence of one of a unique <em>configuration key</em>. For instance, the API method <code>cachePath()</code> (used to specify the driver cache folder) is equivalent to the configuration key <code>wdm.cachePath</code>. These types of configuration keys can be passed when executing the tests, for example, using Maven:</p>
+<p>The second alternative to tune WebDriverManager is using <em>Java system properties</em>.  In this method, each WebDriverManager API method has its equivalence of a unique <em>configuration key</em>. For instance, the API method <code>cachePath()</code> (used to specify the driver cache folder) is equivalent to the configuration key <code>wdm.cachePath</code>. These types of configuration keys can be passed when executing the tests, for example, using Maven:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1961,7 +2095,7 @@ In addition to the methods presented in this section, each manager provides a me
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="shell">docker run --rm -v ${PWD}:/wdm -e ARGS=&quot;resolveDriverFor=chrome&quot; -e WDM_CHROMEVERSION=84 bonigarcia/webdrivermanager:5.0.0</code></pre>
+<pre class="CodeRay highlight"><code data-lang="shell">docker run --rm -v ${PWD}:/wdm -e ARGS=&quot;resolveDriverFor chrome&quot; -e WDM_CHROMEVERSION=84 bonigarcia/webdrivermanager:5.0.0</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2516,7 +2650,7 @@ HTTP proxy. It can be also configured using the environment variable  <code>HTTP
 <div id="footer">
 <div id="footer-text">
 Version 5.0.0-SNAPSHOT<br>
-Released on 31-07-2021
+Released on 02-08-2021
 </div>
 </div>
 </body>
